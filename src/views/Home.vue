@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Counting msg="Welcome to Your Vue.js App"/>
+    <Counting />
   </div>
 </template>
 

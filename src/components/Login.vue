@@ -1,9 +1,25 @@
 <template>
-  <div>
+  <div class="col-md-4 offset-md-4"> 
     <form @submit.prevent="login">
       <label for="">Pin ID :</label>
-      <input type="text" v-model="pin" />
-      <button type="submit">login</button>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          ref="pin"
+          class="form-control"
+          aria-describedby="button-addon2"
+          v-model="pin"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="submit"
+            id="button-addon2"
+          >
+            Login
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -14,6 +30,9 @@ export default {
     return {
       pin: null,
     };
+  },
+  mounted () {
+    this.$refs['pin'].focus();
   },
   methods: {
     login() {

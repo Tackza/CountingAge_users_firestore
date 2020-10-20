@@ -1,15 +1,23 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Counting from "../components/Counting"
-import Login from '../components/Login'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Counting from "../components/Counting";
+import Login from "../components/Login";
+import Editing from "../components/Editing";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "counting",
     component: Counting,
+    children: [
+      {
+        path: "/task/:id",
+        name: "task",
+        component: Editing,
+      },
+    ],
   },
   {
     path: "/login",
@@ -19,9 +27,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

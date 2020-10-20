@@ -10,7 +10,6 @@
   "dependencies": {
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.5",
-    "dayjs": "^1.9.3",
     "firebase": "^7.23.0",
     "moment": "^2.29.1",
     "uuid": "^8.3.1",

@@ -30,19 +30,12 @@ export default new Vuex.Store({
       const result = state.items.filter((data) => data.id !== id);
       state.items = result;
     },
-    UPDATE_DATA_PERSON(state, id, data) {
-      const resultData = {
-        name: data.name,
-        age: data.age,
-        id: id,
-        row: Date(),
-      };
-      const result = state.items.filter((item) => item.id === id);
-      // const resultMap = result.map(detail => {
-      //   return detail = data
-      // });
-      console.log(resultData);
-      console.log(result);
+    UPDATE_DATA_PERSON(state, dataDb) {
+      state.items.map((item) => {
+        if (item.id === dataDb.id) {
+          item = dataDb;
+        }
+      });
     },
   },
   actions: {
@@ -69,7 +62,7 @@ export default new Vuex.Store({
       }
     },
 
-    async logout() {
+    logout() {
       this.commit("LOGOUT");
     },
 
@@ -100,25 +93,37 @@ export default new Vuex.Store({
     },
 
     async deleteData({ commit }, item) {
+      console.log(item.id);
       await firebaseInstance.firestore
         .collection("Persons")
-        .doc(item.id.toString())
+        .doc(this.state.userName + " - " + item.id.toString())
         .delete();
       commit("DELETE_DATA_PERSON", item.id);
     },
 
-    async updateData({ commit }, id, data) {
+    async updateData({ commit }, data) {
       await firebaseInstance.firestore
         .collection("Persons")
-        .doc(id)
-        .set(data);
+        .doc(this.state.userName + " - " + data.id.toString())
+        .update({
+          name: data.name,
+          birthDate: data.age,
+        });
 
-      commit("UPDATE_DATA_PERSON", id, data);
+      const dataDb = await firebaseInstance.firestore
+        .collection("Persons")
+        .doc(this.state.userName + " - " + data.id.toString())
+        .get();
+
+      commit("UPDATE_DATA_PERSON", dataDb.data());
     },
   },
   getters: {
     showAge(state) {
       return state.items;
+    },
+    showUsername(state) {
+      return state.userName;
     },
   },
 });
